@@ -12,11 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^2.9.0",
     "dotenv": "^17.2.4",
     "drizzle-kit": "^0.31.9",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
     "nodemon": "^3.1.11",
     "pg": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3"
   }
 }
