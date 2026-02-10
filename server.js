@@ -1,5 +1,6 @@
-import "dotenv/config"
-import express from "express"
+import "dotenv/config";
+import express from "express";
+import { testConnection } from "./db/index.js";
 
 const app =express()
 const port =process.env.PORT 
@@ -11,6 +12,7 @@ app.get("/", (req ,res )=>{
 
 const start =async () =>{
     try {
+        await testConnection()
         app.listen(port,()=>{
             console.log(`server is running on PORT :${port}`)
         })
