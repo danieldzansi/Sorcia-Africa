@@ -1,7 +1,8 @@
+import "dotenv/config"
 import express from "express"
 
 const app =express()
-const port =process.env.PORT || 4000
+const port =process.env.PORT 
 
 
 app.get("/", (req ,res )=>{
@@ -15,6 +16,8 @@ const start =async () =>{
         })
     } catch (error) {
         console.error ("failed to start sever",error)
-        process.exist(1)
+        process.exit(1)
     }
 } 
+
+start ()
