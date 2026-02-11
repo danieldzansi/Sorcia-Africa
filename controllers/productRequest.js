@@ -36,11 +36,22 @@ const addRequest = async (req, res) => {
       .insert(productRequest)
       .values(productData)
       .returning();
-    res.json({ success: true, message: "request senf successfully" });
+    res.json({ success: true, message: "request sent successfully" });
   } catch (error) {
     console.error("Error:", error);
     res.json({ success: false, message: error.message });
   }
 };
 
-export default addRequest;
+
+const listAllRequest = async ( req ,res )=>{
+  try {
+    const allrequests = await db.select().from(productRequest)
+    res.json ({success:true , allrequests})
+  } catch (error) {
+    console.log(error)
+    res.json ({success:false , message :error.message})
+  }
+}
+
+export {addRequest,listAllRequest}
