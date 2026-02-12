@@ -47,6 +47,16 @@ export const productRequest =pgTable ("product_request",{
     createdAt :timestamp("create_at").defaultNow()
 })
 
-
+export const quotations = pgTable("quotations", {
+  id: uuid("id").default(sql`gen_random_uuid()`).primaryKey(),
+  requestId: uuid("request_id") .references(() => productRequest.id).notNull(),
+  productCost: integer("product_cost").notNull(),
+  shippingCost: integer("shipping_cost").notNull(),
+  serviceFee: integer("service_fee").notNull(),
+  total: integer("total").notNull(),
+  approvalToken: varchar("approval_token").notNull(),
+  status: varchar("status").default("sent"),
+  createdAt: timestamp("created_at").defaultNow()
+})
 
 export default db 
