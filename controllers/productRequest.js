@@ -1,7 +1,8 @@
-import db, { productRequest } from "../db/index.js";
+import db, { productRequest,quotations } from "../db/index.js";
 import { eq } from "drizzle-orm";
 import { v2 as cloudinary } from "cloudinary";
 import { sendTelegramNotification } from "../utils/telegram.js";
+
 
 // Temporarily disable SSL verification (remove in production)
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -57,3 +58,12 @@ const listAllRequest = async ( req ,res )=>{
 }
 
 export {addRequest,listAllRequest}
+
+
+const createQuote =async (req ,res)=>{
+  try {
+     
+  } catch (error) {
+    
+  }
+}
