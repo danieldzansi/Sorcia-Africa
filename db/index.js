@@ -36,8 +36,7 @@ export const testConnection =async ()=>{
 
 export const productRequest =pgTable ("product_request",{
     id: uuid("id").default(sql`gen_random_uuid()`).primaryKey(),
-    firstName : varchar ("first_name").notNull(),
-    lastName : varchar("last_name").notNull(),
+    fullName : varchar ("full_name").notNull(),
     email : varchar("email").notNull(),
     phone : varchar("phone").notNull(),
     productImage :text ("product_image").notNull(),
