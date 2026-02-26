@@ -9,7 +9,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const addRequest = async (req, res) => {
   try {
-    const { fullName, email, phone, description, quantity, budget } =
+    const { fullName, email, phone, description, quantity, budget , colour} =
       req.body;
       
     const images = req.files || [];
@@ -28,6 +28,7 @@ const addRequest = async (req, res) => {
       phone,
       email,
       description,
+      colour,
       quantity: parseInt(quantity),
       budget: parseInt(budget),
       productImage: JSON.stringify(imagesUrl),

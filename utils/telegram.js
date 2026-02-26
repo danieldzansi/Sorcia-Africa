@@ -9,10 +9,10 @@ const CHAT_ID = process.env.TELEGRAM_CHAT_ID
 export const sendTelegramNotification = async (data)=>{
     try {
         const message =` NEW PRODUCT REQUEST 
-         FirstName: ${data.firstName}
-         LastName: ${data.lastName}
+         FullName: ${data.fullName}
          Phone: ${data.phone}
          Email: ${data.email}
+         Colour: ${data.colour}
          Description: ${data.description}
          Quantity: ${data.quantity}
          Budget: ${data.budget}

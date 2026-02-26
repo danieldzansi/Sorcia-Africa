@@ -1,0 +1,1 @@
+ALTER TABLE "product_request" ADD COLUMN "colour" varchar NOT NULL;

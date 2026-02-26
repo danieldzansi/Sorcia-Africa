@@ -38,6 +38,7 @@ export const productRequest =pgTable ("product_request",{
     id: uuid("id").default(sql`gen_random_uuid()`).primaryKey(),
     fullName : varchar ("full_name").notNull(),
     email : varchar("email").notNull(),
+    colour : varchar("colour").notNull().default("unknown"),
     phone : varchar("phone").notNull(),
     productImage :text ("product_image").notNull(),
     description : text ("description").notNull(),

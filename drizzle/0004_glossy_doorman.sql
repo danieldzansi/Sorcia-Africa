@@ -1,0 +1,1 @@
+ALTER TABLE "product_request" ALTER COLUMN "colour" SET DEFAULT 'unknown';
