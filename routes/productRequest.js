@@ -10,3 +10,4 @@ productRouter.post ('/add',upload.array('images',10),addRequest)
 productRouter.get ('/get',listAllRequest)
 
 export default productRouter
+

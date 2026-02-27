@@ -1,17 +1,17 @@
-import db, { productRequest,quotations } from "../db/index.js";
+import db, { productRequest, quotations } from "../db/index.js";
 import { eq } from "drizzle-orm";
 import { v2 as cloudinary } from "cloudinary";
 import { sendTelegramNotification } from "../utils/telegram.js";
-
+import { sendContactEmail } from "../utils/gmail.js";
 
 // Temporarily disable SSL verification (remove in production)
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const addRequest = async (req, res) => {
   try {
-    const { fullName, email, phone, description, quantity, budget , colour} =
+    const { fullName, email, phone, description, quantity, budget, colour } =
       req.body;
-      
+
     const images = req.files || [];
 
     const imagesUrl = await Promise.all(
@@ -34,7 +34,7 @@ const addRequest = async (req, res) => {
       productImage: JSON.stringify(imagesUrl),
     };
 
-    await sendTelegramNotification(productData)
+    await sendTelegramNotification(productData);
 
     const results = await db
       .insert(productRequest)
@@ -47,24 +47,19 @@ const addRequest = async (req, res) => {
   }
 };
 
-
-const listAllRequest = async ( req ,res )=>{
+const listAllRequest = async (req, res) => {
   try {
-    const allrequests = await db.select().from(productRequest)
-    res.json ({success:true , allrequests})
+    const allrequests = await db.select().from(productRequest);
+    res.json({ success: true, allrequests });
   } catch (error) {
-    console.log(error)
-    res.json ({success:false , message :error.message})
+    console.log(error);
+    res.json({ success: false, message: error.message });
   }
-}
+};
 
-export {addRequest,listAllRequest}
+export { addRequest, listAllRequest };
 
-
-const createQuote =async (req ,res)=>{
+const createQuote = async (req, res) => {
   try {
-     
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
