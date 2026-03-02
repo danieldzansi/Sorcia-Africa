@@ -12,8 +12,8 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://admin.sorciaafrica.com",
-      "https://sorciaafrica.com",
+      process.env.ADMIN_URL,
+      process.env.FRONTEND_URL,
       "http://localhost:5173",
     ],
     credentials: true,
