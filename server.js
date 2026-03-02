@@ -4,6 +4,7 @@ import { testConnection } from "./db/index.js";
 import connectCloudinary from "./config/cloudinary.js";
 import productRouter from "./routes/productRequest.js";
 import supportRouter from "./routes/contactSupport.js";
+import quotationRouter from "./routes/quotation.js";
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/", productRouter);
 app.use("/api/support", supportRouter);
+app.use("/api/quotations", quotationRouter);
 
 const start = async () => {
   try {

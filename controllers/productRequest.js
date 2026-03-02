@@ -58,8 +58,3 @@ const listAllRequest = async (req, res) => {
 };
 
 export { addRequest, listAllRequest };
-
-const createQuote = async (req, res) => {
-  try {
-  } catch (error) {}
-};
