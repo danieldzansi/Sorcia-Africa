@@ -1,14 +1,17 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import { testConnection } from "./db/index.js";
 import connectCloudinary from "./config/cloudinary.js";
 import productRouter from "./routes/productRequest.js";
 import supportRouter from "./routes/contactSupport.js";
 import quotationRouter from "./routes/quotation.js";
+import authRouter from "./routes/auth.js";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 connectCloudinary();
 
@@ -19,6 +22,7 @@ app.get("/", (req, res) => {
 app.use("/api/", productRouter);
 app.use("/api/support", supportRouter);
 app.use("/api/quotations", quotationRouter);
+app.use("/api/auth", authRouter);
 
 const start = async () => {
   try {
