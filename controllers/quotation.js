@@ -49,8 +49,9 @@ export const sendQuotation = async (req, res) => {
       })
       .returning();
 
-    const apiUrl = process.env.API_URL || "https://sorciaafrica.com/api";
-    const approvalLink = `${apiUrl}/quotations/approve/${approvalToken}`;
+    const apiUrl =
+      process.env.API_URL || "https://sorcia-africa-production.up.railway.app";
+    const approvalLink = `${apiUrl}/api/quotations/approve/${approvalToken}`;
 
     const emailHtml = quotationEmailTemplate({
       customerName: request.fullName,
