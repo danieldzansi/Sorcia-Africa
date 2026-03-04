@@ -11,8 +11,6 @@ import authRouter from "./routes/auth.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-/* ---------- Allowed Origins ---------- */
-
 const frontendUrls = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((url) => url.trim())
   : [];
@@ -22,8 +20,6 @@ const allowedOrigins = [
   ...frontendUrls,
   "http://localhost:5173",
 ];
-
-/* ---------- Middleware ---------- */
 
 app.use(
   cors({
@@ -42,11 +38,8 @@ app.use(
 
 app.use(express.json());
 
-/* ---------- Services ---------- */
-
 connectCloudinary();
 
-/* ---------- Routes ---------- */
 
 app.get("/", (req, res) => {
   res.send("API is working");
@@ -57,7 +50,6 @@ app.use("/api/support", supportRouter);
 app.use("/api/quotations", quotationRouter);
 app.use("/api/auth", authRouter);
 
-/* ---------- Server Start ---------- */
 
 const start = async () => {
   try {
