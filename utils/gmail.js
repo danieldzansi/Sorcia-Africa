@@ -13,7 +13,7 @@ export const sendContactEmail = async ({
   fullName,
   email,
   phone,
-  productcart,
+  productCategory,
   quantity,
   country,
   message
@@ -29,12 +29,10 @@ New Product Request
 Full Name: ${fullName}
 Email: ${email}
 Phone: ${phone}
-Product: ${productcart}
+Product: ${productCategory}
 Quantity: ${quantity}
 Country: ${country}
-
-Message:
-${message}
+Message:${message}
 `,
   };
 
