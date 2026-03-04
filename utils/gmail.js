@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import crypto from "crypto";
 import "dotenv/config";
 
 const transporter = nodemailer.createTransport({
@@ -7,6 +8,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASS,
   },
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 15000,
 });
 
 export const sendContactEmail = async ({
@@ -16,9 +20,8 @@ export const sendContactEmail = async ({
   productCategory,
   quantity,
   country,
-  message
+  message,
 }) => {
-
   const mailOptions = {
     from: `"Sorcia Africa Website" <${process.env.GMAIL_USER}>`,
     to: "support@sorciaafrica.com",
@@ -38,9 +41,10 @@ Message:${message}
 
   try {
     await transporter.sendMail(mailOptions);
-    return { success: true };
+    const id = `SR-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+    return { success: true, id };
   } catch (error) {
     console.error("Email error:", error);
-    return { success: false, error };
+    return { success: false, error: error.message || error };
   }
 };

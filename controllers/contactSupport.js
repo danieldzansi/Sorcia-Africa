@@ -26,6 +26,7 @@ export const contactSupport = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "Support request sent successfully",
+        id: result.id,
       });
     }
 
@@ -34,7 +35,6 @@ export const contactSupport = async (req, res) => {
       message: "Failed to send support request",
       error: result.error,
     });
-
   } catch (error) {
     return res.status(500).json({
       success: false,
