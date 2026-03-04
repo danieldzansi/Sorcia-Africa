@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import db, { productRequest, quotations } from "../db/index.js";
 import { sendQuotationEmail } from "../utils/resendEmail.js";
 import { quotationEmailTemplate } from "../utils/emailTemplates.js";
+import { sendTelegramNotification } from "../utils/telegram.js";
 import "dotenv/config";
 
 export const sendQuotation = async (req, res) => {
@@ -155,6 +156,19 @@ export const approveQuotation = async (req, res) => {
       .set({ status: "approved" })
       .where(eq(quotations.approvalToken, token))
       .returning();
+
+    // Fetch the related product request for customer details
+    const [request] = await db
+      .select()
+      .from(productRequest)
+      .where(eq(productRequest.id, quotation.requestId));
+
+    // Send Telegram notification
+    const telegramMessage = `✅ QUOTATION APPROVED\n\nCustomer: ${request?.fullName || "N/A"}\nEmail: ${request?.email || "N/A"}\nPhone: ${request?.phone || "N/A"}\nProduct: ${request?.description || "N/A"}\nQuantity: ${request?.quantity || "N/A"}\nTotal: GHS ${quotation.total?.toLocaleString()}\n\nCheck the Admin Dashboard for details.`;
+
+    sendTelegramNotification({ customMessage: telegramMessage }).catch((err) =>
+      console.error("Telegram notification failed:", err)
+    );
 
     res.send(
       approvalPageHtml(
