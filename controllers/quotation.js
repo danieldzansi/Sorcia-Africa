@@ -167,7 +167,7 @@ export const approveQuotation = async (req, res) => {
     const telegramMessage = `✅ QUOTATION APPROVED\n\nCustomer: ${request?.fullName || "N/A"}\nEmail: ${request?.email || "N/A"}\nPhone: ${request?.phone || "N/A"}\nProduct: ${request?.description || "N/A"}\nQuantity: ${request?.quantity || "N/A"}\nTotal: GHS ${quotation.total?.toLocaleString()}\n\nCheck the Admin Dashboard for details.`;
 
     sendTelegramNotification({ customMessage: telegramMessage }).catch((err) =>
-      console.error("Telegram notification failed:", err)
+      console.error("Telegram notification failed:", err),
     );
 
     res.send(

@@ -42,7 +42,7 @@ const addRequest = async (req, res) => {
       .returning();
     res.json({ success: true, message: "request sent successfully" });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("addRequest Error:", error);
     res.json({ success: false, message: error.message });
   }
 };

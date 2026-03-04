@@ -1,14 +1,13 @@
 import "dotenv/config";
 
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
-const CHAT_ID = process.env.TELEGRAM_CHAT_ID 
-
-
-export const sendTelegramNotification = async (data)=>{
-    try {
-        const message = data.customMessage || ` NEW PRODUCT REQUEST 
+export const sendTelegramNotification = async (data) => {
+  try {
+    const message =
+      data.customMessage ||
+      ` NEW PRODUCT REQUEST 
          FullName: ${data.fullName}
          Phone: ${data.phone}
          Email: ${data.email}
@@ -18,22 +17,19 @@ export const sendTelegramNotification = async (data)=>{
          Budget: ${data.budget}
          image: ${data.productImage}
          check Admin dashboard .
-         `
+         `;
 
-         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
-            method :"POST",
-            headers:{
-                "Content-Type" : "application/json",
-            },
-            body: JSON.stringify({
-                chat_id :CHAT_ID,
-                text : message
-
-
-            })
-        
-         })
-    } catch (error) {
-        console.error("Telegram Error:", error)
-    }
-}
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: message,
+      }),
+    });
+  } catch (error) {
+    console.error("Telegram Error:", error);
+  }
+};
