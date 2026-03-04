@@ -23,9 +23,8 @@ export const contactSupport = async (req, res) => {
       message,
     });
 
-    // Fire-and-forget Telegram notification
     sendTelegramNotification({
-      customMessage: `📩 NEW CONTACT FORM\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "—"}\nCategory: ${productCategory}\nQty: ${quantity}\nCountry: ${country}\nMessage: ${message}`,
+      customMessage: `NEW CONTACT FORM\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "—"}\nCategory: ${productCategory}\nQty: ${quantity}\nCountry: ${country}\nMessage: ${message}`,
     }).catch((err) => console.error("Telegram notify error:", err));
 
     if (result.success) {

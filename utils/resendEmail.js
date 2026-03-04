@@ -29,7 +29,7 @@ export const sendContactEmail = async ({
       from:
         process.env.RESEND_FROM_EMAIL ||
         "Sorcia Africa <hello@sorciaafrica.com>",
-      to: "support@sorciaafrica.com",
+      to: "hello@sorciaafrica.com",
       reply_to: email,
       subject: `New Contact Form Submission — ${productCategory}`,
       html: `
