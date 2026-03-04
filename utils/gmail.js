@@ -13,19 +13,36 @@ export const sendContactEmail = async ({
   fullName,
   email,
   phone,
-  description,
+  productcart,
+  quantity,
+  country,
+  message
 }) => {
+
   const mailOptions = {
-    from: process.env.GMAIL_USER,
+    from: `"Sorcia Africa Website" <${process.env.GMAIL_USER}>`,
     to: "support@sorciaafrica.com",
-    subject: "New Contact Form Submission",
-    text: `Full Name: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nDescription: ${description}`,
+    subject: "New Product Request Submission",
+    text: `
+New Product Request
+
+Full Name: ${fullName}
+Email: ${email}
+Phone: ${phone}
+Product: ${productcart}
+Quantity: ${quantity}
+Country: ${country}
+
+Message:
+${message}
+`,
   };
 
   try {
     await transporter.sendMail(mailOptions);
     return { success: true };
   } catch (error) {
+    console.error("Email error:", error);
     return { success: false, error };
   }
 };
