@@ -1,4 +1,5 @@
-import { sendContactEmail } from "../utils/gmail.js";
+import { sendContactEmail } from "../utils/resendEmail.js";
+import { sendTelegramNotification } from "../utils/telegram.js";
 
 export const contactSupport = async (req, res) => {
   try {
@@ -22,10 +23,16 @@ export const contactSupport = async (req, res) => {
       message,
     });
 
+    // Fire-and-forget Telegram notification
+    sendTelegramNotification({
+      customMessage: `📩 NEW CONTACT FORM\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "—"}\nCategory: ${productCategory}\nQty: ${quantity}\nCountry: ${country}\nMessage: ${message}`,
+    }).catch((err) => console.error("Telegram notify error:", err));
+
     if (result.success) {
       return res.status(200).json({
         success: true,
-        message: "Support request sent successfully",
+        message:
+          "Thank you! We've received your message and will respond within 24–48 hours.",
         id: result.id,
       });
     }
