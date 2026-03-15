@@ -93,3 +93,36 @@ export const sendQuotationEmail = async ({ to, subject, html }) => {
     return { success: false, error };
   }
 };
+
+/**
+ * Send an order-requirement-not-met email to a customer via Resend.
+ *
+ * @param {Object} params
+ * @param {string} params.to - Customer email address
+ * @param {string} params.subject - Email subject line
+ * @param {string} params.html - Rendered HTML email body
+ * @returns {Promise<{success: boolean, data?: object, error?: object}>}
+ */
+export const sendOrderNotMetEmail = async ({ to, subject, html }) => {
+  try {
+    const { data, error } = await resend.emails.send({
+      from:
+        process.env.RESEND_FROM_EMAIL ||
+        "Sorcia Africa <hello@sorciaafrica.com>",
+      to,
+      subject,
+      html,
+    });
+
+    if (error) {
+      console.error("Resend order-not-met email error:", error);
+      return { success: false, error };
+    }
+
+    console.log("Order-not-met email sent successfully:", data);
+    return { success: true, data };
+  } catch (error) {
+    console.error("Failed to send order-not-met email:", error);
+    return { success: false, error };
+  }
+};

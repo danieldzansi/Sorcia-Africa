@@ -1,8 +1,14 @@
 import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import db, { productRequest, quotations } from "../db/index.js";
-import { sendQuotationEmail } from "../utils/resendEmail.js";
-import { quotationEmailTemplate } from "../utils/emailTemplates.js";
+import {
+  sendQuotationEmail,
+  sendOrderNotMetEmail,
+} from "../utils/resendEmail.js";
+import {
+  quotationEmailTemplate,
+  orderRequirementNotMetEmailTemplate,
+} from "../utils/emailTemplates.js";
 import { sendTelegramNotification } from "../utils/telegram.js";
 import "dotenv/config";
 
@@ -195,6 +201,60 @@ export const listQuotations = async (req, res) => {
     res.json({ success: true, quotations: allQuotations });
   } catch (error) {
     console.error("listQuotations error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const sendOrderNotMet = async (req, res) => {
+  try {
+    const { requestId, reason } = req.body;
+    if (!requestId || !reason?.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "requestId and reason are required.",
+      });
+    }
+
+    const [request] = await db
+      .select()
+      .from(productRequest)
+      .where(eq(productRequest.id, requestId));
+
+    if (!request) {
+      return res.status(404).json({
+        success: false,
+        message: "Product request not found.",
+      });
+    }
+
+    const emailHtml = orderRequirementNotMetEmailTemplate({
+      customerName: request.fullName,
+      description: request.description,
+      quantity: request.quantity,
+      colour: request.colour,
+      reason: reason.trim(),
+    });
+
+    const emailResult = await sendOrderNotMetEmail({
+      to: request.email,
+      subject: `Important Update on Your Request – Sorcia Africa`,
+      html: emailHtml,
+    });
+
+    if (!emailResult.success) {
+      return res.status(500).json({
+        success: false,
+        message: "Email failed to send.",
+        emailError: emailResult.error,
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Order requirement notification sent successfully.",
+    });
+  } catch (error) {
+    console.error("sendOrderNotMet error:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
